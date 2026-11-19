@@ -3,7 +3,9 @@
 | 項目 | 說明 |
 |---|---|
 | 頁面 | [`index.html`](./index.html) 進度｜[`exceptions.html`](./exceptions.html) 異常入口 |
-| 預期 URL | `https://iven00.github.io/YESMA.CARES/progress/`（開 Pages 後） |
+| 線上 URL（已通） | **https://iven00.github.io/YESMA.CARES-progress/** |
+| 異常入口 | **https://iven00.github.io/YESMA.CARES-progress/exceptions.html** |
+| 說明 | 主倉 `YESMA.CARES` 為 **private**，免費方案無法開 Pages；改用公開倉 `Iven00/YESMA.CARES-progress` 託管進度頁。更新：改本目錄 HTML → 同步推到該公開倉。 |
 | 異常權威 | Google Sheet `PO_Actions`＋Apps Script Web App（程式 PM／SM 寫入） |
 | 票據權威 | Sheet `Tickets`（打通後）；repo Markdown＝快照（**不整批 Issues**） |
 
