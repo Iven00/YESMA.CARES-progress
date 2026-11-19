@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CG01 異常頁入口</title>
+  <style>
+    body {
+      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+      background: #0f1419;
+      color: #e7ecf1;
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem;
+      line-height: 1.5;
+    }
+    a { color: #4a8fd4; }
+    .box {
+      background: #1a222c;
+      border: 1px solid #2a3542;
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+    }
+    code { font-size: 0.85em; }
+    .muted { color: #8b9aab; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>異常／需你處理</h1>
+  <p class="muted">
+    權威資料在 Google Sheet 工作表 <code>PO_Actions</code>（OPEN）。
+    由程式 <strong>PM</strong>／<strong>SM</strong> 排程寫入；你處理後把該列改 DONE。
+  </p>
+
+  <div class="box">
+    <strong>正式異常頁（Apps Script Web App）</strong>
+    <p class="muted">打通 Sheet 並部署 Web App 後，把 URL 填進下方（或改本檔連結）。</p>
+    <p>
+      <!-- 部署後改成真實 URL -->
+      <a id="webapp" href="#">尚未設定 webapp_url — 見試算表 Meta 或通道說明</a>
+    </p>
+    <p><button type="button" onclick="location.reload()">重新整理本入口</button></p>
+  </div>
+
+  <div class="box">
+    <strong>你怎麼用</strong>
+    <ol>
+      <li>排程每小時（或選單「立即排程一輪」）掃描票 → 寫入 <code>PO_Actions</code></li>
+      <li>開 Web App 異常頁，手動刷新</li>
+      <li>在 Sheet 填 <code>po_resolution</code>，<code>status=DONE</code></li>
+    </ol>
+  </div>
+
+  <p class="muted">
+    進度總覽：<a href="./index.html">progress/</a> ·
+    角色說明在 repo：<code>tickets/google-sheet-channel/PM_SM_角色與排程.md</code>
+  </p>
+</body>
+</html>

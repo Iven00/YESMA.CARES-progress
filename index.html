@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <title>YESMA.CARES｜CG01 進度板</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a222c;
+      --text: #e7ecf1;
+      --muted: #8b9aab;
+      --done: #3d9a6a;
+      --run: #c9a227;
+      --block: #c45c5c;
+      --ready: #4a8fd4;
+      --line: #2a3542;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 1.5rem;
+      max-width: 52rem;
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.25rem; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    .actions { margin-bottom: 1.25rem; }
+    .actions a, .actions button {
+      display: inline-block;
+      margin: 0 0.5rem 0.5rem 0;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ready);
+      text-decoration: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+    }
+    .card .n { font-size: 1.75rem; font-weight: 700; }
+    .card .l { color: var(--muted); font-size: 0.8rem; }
+    .done .n { color: var(--done); }
+    .run .n { color: var(--run); }
+    .block .n { color: var(--block); }
+    .ready .n { color: var(--ready); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .tag {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .t-done { background: #1e3d2e; color: var(--done); }
+    .t-run { background: #3d3420; color: var(--run); }
+    .t-block { background: #3d2222; color: var(--block); }
+    .t-gray { background: #2a3038; color: var(--muted); }
+    a { color: var(--ready); }
+    ul { margin: 0.25rem 0 0; padding-left: 1.2rem; color: var(--muted); }
+    code { font-size: 0.85em; }
+  </style>
+</head>
+<body>
+  <h1>NS-CARES-CG01 進度板</h1>
+  <p class="sub">
+    快照更新：2026-11-20 · 票據權威仍在 repo 內 Markdown（<strong>不整批同步 Issues</strong>）
+  </p>
+  <div class="actions">
+    <button type="button" onclick="location.reload()">重新整理本頁</button>
+    <a href="https://github.com/Iven00/YESMA.CARES/blob/main/2工作分解過程文件/tickets/Ticket_Backlog.md">Ticket_Backlog</a>
+    <a href="https://github.com/Iven00/YESMA.CARES/blob/main/2工作分解過程文件/tickets/事件日誌.md">事件日誌</a>
+    <a href="https://github.com/Iven00/YESMA.CARES/blob/main/2工作分解過程文件/tickets/進度板.md">進度板.md</a>
+    <a href="./exceptions.html">異常頁入口（需你處理）</a>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="l">總票數</div><div class="n">47</div></div>
+    <div class="card done"><div class="l">DONE</div><div class="n">4</div></div>
+    <div class="card run"><div class="l">RUNNING</div><div class="n">1</div></div>
+    <div class="card block"><div class="l">BLOCKED（顯性）</div><div class="n">2+</div></div>
+    <div class="card ready"><div class="l">04B 拆票</div><div class="n">0</div></div>
+  </div>
+
+  <h2 style="font-size:1rem;margin:0 0 0.5rem;">依 Epic</h2>
+  <table>
+    <thead>
+      <tr><th>Epic</th><th>狀態</th><th>說明</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>EP-00 底座／beta</td>
+        <td><span class="tag t-run">進行中</span></td>
+        <td>DONE 4；TK-0003 RUNNING；TK-0002 BLOCKED</td>
+      </tr>
+      <tr>
+        <td>EP-01～07</td>
+        <td><span class="tag t-gray">未解鎖</span></td>
+        <td>多依賴 EP-00／上游 Ticket</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:1rem;margin:0 0 0.5rem;">現在焦點</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Ticket</th><th>狀態</th><th>下一步</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td><td>TK-0002</td>
+        <td><span class="tag t-block">BLOCKED</span></td>
+        <td>用 YESMA.CARES/.venv 裝依賴並驗證 admin_portal 登入</td>
+      </tr>
+      <tr>
+        <td>2</td><td>TK-0003</td>
+        <td><span class="tag t-run">RUNNING</span></td>
+        <td>續填 beta↔flows 差異表</td>
+      </tr>
+      <tr>
+        <td>3</td><td>TK-0004</td>
+        <td><span class="tag t-block">BLOCKED</span></td>
+        <td>等 TK-0003</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <strong>觀察方式</strong>
+    <ul>
+      <li>本頁＝推送到 <code>main</code> 後的進度快照；瀏覽器重新整理即可</li>
+      <li>清單／動態仍以 repo：<code>Ticket_Backlog.md</code>、<code>事件日誌.md</code> 為準</li>
+      <li>需要單開討論時再<strong>個案</strong>建 GitHub Issue，不整批匯入</li>
+    </ul>
+  </div>
+</body>
+</html>
