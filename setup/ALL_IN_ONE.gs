@@ -142,6 +142,8 @@ function onOpen() {
     .addItem('4. 安裝每30分鐘觸發', 'installHalfHourTrigger')
     .addSeparator()
     .addItem('5. 儲存異常頁 Web App URL', 'saveWebAppUrl')
+    .addSeparator()
+    .addItem('6. 單票制重整 applySequentialQueueFix', 'applySequentialQueueFix')
     .addToUi();
 }
 
@@ -183,7 +185,10 @@ function logEvent_(type, ticketId, detail, refs) {
 
 // ===== FILE: PM.gs =====
 /**
- * 程式 PM：排程推動、焦點、升級 PO_Actions
+ * 程式 PM：單票推進、焦點、真阻塞才升級 PO_Actions
+ *
+ * 規則：同時最多一張 RUNNING＝焦點；DONE（含證據）後才推下一張；
+ * 等依賴＝READY；BLOCKED 僅真卡點且應有 blocked_reason。
  */
 
 var PO_HEADERS = [
@@ -221,15 +226,26 @@ function pmTick() {
     else if (st === 'BLOCKED') blocked.push(rowObj_(rows[r], idx));
   }
 
-  // 焦點：READY 且依賴已滿足（簡化：depends 空或所列皆 DONE／封存）
   var focus = [];
-  ready.forEach(function (t) {
-    if (depsSatisfied_(t.depends, rows, idx)) focus.push(t.ticket_id);
-  });
+  var multiRunning = false;
+  if (running.length > 0) {
+    running.sort(function (a, b) { return String(a.ticket_id).localeCompare(String(b.ticket_id)); });
+    focus = [running[0].ticket_id];
+    multiRunning = running.length > 1;
+  } else {
+    var eligible = [];
+    ready.forEach(function (t) {
+      if (depsSatisfied_(t.depends, rows, idx)) eligible.push(t.ticket_id);
+    });
+    eligible.sort();
+    if (eligible.length) focus = [eligible[0]];
+  }
 
-  // BLOCKED → 需 HANDLE／IMPEDIMENT（去重：同 ticket 已有 OPEN 則不重複開）
+  var realBlocked = [];
   blocked.forEach(function (t) {
-    var reason = t.blocked_reason || t.notes || '未填 blocked_reason';
+    var reason = String(t.blocked_reason || '').trim();
+    if (!reason) return;
+    realBlocked.push(t);
     upsertPoAction_({
       source_role: 'PM',
       type: looksLikeDecision_(reason) ? 'DECISION' : 'HANDLE',
@@ -240,30 +256,104 @@ function pmTick() {
     });
   });
 
-  // 無 READY 且有 RUNNING 以外的空轉 → 提醒
-  if (focus.length === 0 && ready.length === 0 && blocked.length > 0) {
+  if (multiRunning) {
+    upsertPoAction_({
+      source_role: 'PM',
+      type: 'IMPEDIMENT',
+      priority: 'P0',
+      title: '同時多張 RUNNING（違反單票制）',
+      detail: running.map(function (t) { return t.ticket_id; }).join(',') + '｜請只留一張 RUNNING',
+      related_tickets: running.map(function (t) { return t.ticket_id; }).join(',')
+    });
+  }
+
+  if (focus.length === 0 && running.length === 0 && realBlocked.length > 0) {
     upsertPoAction_({
       source_role: 'PM',
       type: 'IMPEDIMENT',
       priority: 'P0',
       title: '無可開工票：全線受阻',
-      detail: 'BLOCKED=' + blocked.length + '；請清 PO_Actions／依賴',
-      related_tickets: blocked.map(function (b) { return b.ticket_id; }).join(',')
+      detail: '真 BLOCKED=' + realBlocked.length + '；請清卡點後再推下一張',
+      related_tickets: realBlocked.map(function (b) { return b.ticket_id; }).join(',')
     });
   }
 
   var summary = {
     role: 'PM',
+    policy: 'sequential_one_ticket',
     ready: ready.length,
-    focus: focus.slice(0, 5),
+    focus: focus,
     running: running.length,
     blocked: blocked.length,
+    realBlocked: realBlocked.length,
     done: done,
-    sealed: sealed
+    sealed: sealed,
+    multiRunning: multiRunning
   };
   logSchedule_('PM', 'OK', JSON.stringify(summary));
   setMeta_('last_pm_tick', new Date().toISOString());
-  setMeta_('pm_focus', focus.slice(0, 5).join(','));
+  setMeta_('pm_focus', focus.join(','));
+  Logger.log(JSON.stringify(summary));
+  return summary;
+}
+
+/**
+ * 一次重整：等依賴 BLOCKED→READY、對齊 TK-0002 DONE、關閉洗版 PO_Actions、再 pmTick
+ */
+function applySequentialQueueFix() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var tickets = ss.getSheetByName(SHEET_TICKETS);
+  if (!tickets || tickets.getLastRow() < 2) throw new Error('Tickets 無資料');
+  var rows = tickets.getDataRange().getValues();
+  var idx = indexMap_(rows[0]);
+  var converted = 0;
+  for (var r = 1; r < rows.length; r++) {
+    var id = String(rows[r][idx.ticket_id] || '');
+    var st = String(rows[r][idx.status] || '');
+    var reason = String(rows[r][idx.blocked_reason] || '').trim();
+    var evidence = String(rows[r][idx.evidence_url] || '').trim();
+    if (id === 'TK-0002' && st !== 'DONE' && evidence) {
+      tickets.getRange(r + 1, idx.status + 1).setValue('DONE');
+      tickets.getRange(r + 1, idx.blocked_reason + 1).setValue('');
+      tickets.getRange(r + 1, idx.updated_at + 1).setValue(new Date().toISOString());
+      converted++;
+      continue;
+    }
+    if (st === 'BLOCKED' && !reason) {
+      tickets.getRange(r + 1, idx.status + 1).setValue('READY');
+      tickets.getRange(r + 1, idx.updated_at + 1).setValue(new Date().toISOString());
+      converted++;
+    }
+  }
+
+  ensurePoSheet_();
+  var po = ss.getSheetByName('PO_Actions');
+  var closed = 0;
+  if (po && po.getLastRow() >= 2) {
+    var pdata = po.getDataRange().getValues();
+    var pmap = {};
+    pdata[0].forEach(function (n, i) { pmap[String(n)] = i; });
+    for (var p = 1; p < pdata.length; p++) {
+      if (String(pdata[p][pmap.status]) !== 'OPEN') continue;
+      var title = String(pdata[p][pmap.title] || '');
+      if (/票阻塞：|BLOCKED 未寫原因：|無可開工票：全線受阻/.test(title)) {
+        po.getRange(p + 1, pmap.status + 1).setValue('DONE');
+        po.getRange(p + 1, pmap.po_resolution + 1).setValue('單票制重整：等依賴≠BLOCKED');
+        po.getRange(p + 1, pmap.resolved_at + 1).setValue(new Date().toISOString());
+        closed++;
+      }
+    }
+  }
+
+  var summary = pmTick();
+  summary.converted_to_ready_or_done = converted;
+  summary.closed_po_noise = closed;
+  try {
+    SpreadsheetApp.getUi().alert(
+      '單票制重整完成\n轉狀態 ' + converted + ' 列\n關閉洗版異常 ' + closed +
+      '\n焦點：' + (summary.focus || []).join(',')
+    );
+  } catch (e) {}
   Logger.log(JSON.stringify(summary));
   return summary;
 }
@@ -423,7 +513,11 @@ function installHalfHourTrigger() {
     .everyMinutes(30)
     .create();
   setMeta_('trigger', 'halfHourOrchestrate every 30m');
-  SpreadsheetApp.getUi().alert('已安裝每 30 分鐘觸發：halfHourOrchestrate（含 30 分閒置催票規則）');
+  try {
+    SpreadsheetApp.getUi().alert('已安裝每 30 分鐘觸發：halfHourOrchestrate（含 30 分閒置催票規則）');
+  } catch (e) {
+    Logger.log('installHalfHourTrigger 完成（無 UI 環境，略過 alert）');
+  }
 }
 
 /** @deprecated 改用 installHalfHourTrigger */
