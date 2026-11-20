@@ -1,12 +1,31 @@
 ﻿{
-    "updated_at":  "2026-11-20T21:37:43+08:00",
+    "updated_at":  "2026-11-20T21:40:19+08:00",
     "source":  "observe refresh；異常權威＝Sheet Web App PO_Actions",
     "progress_pct":  100,
     "formula":  "DONE/total = 47/47",
     "pm_focus":  "",
-    "pm_phase":  "",
+    "pm_phase":  "idle",
     "open":  [
-
+                 {
+                     "id":  "POA-20261120-140144-91",
+                     "role":  "SM",
+                     "type":  "IDLE_CHECK",
+                     "priority":  "P1",
+                     "title":  "30分鐘閒置檢查：TK-0003",
+                     "detail":  "RUNNING 超過 30 分鐘無 updated_at 更新，請確認是否仍在執行、未閒置｜beta↔flows 差異表",
+                     "tickets":  "TK-0003",
+                     "created":  "2026-11-20T06:01:44.499Z"
+                 },
+                 {
+                     "id":  "POA-20261120-213151-13",
+                     "role":  "PM",
+                     "type":  "HANDLE",
+                     "priority":  "P2",
+                     "title":  "30分鐘無完成且無 RUNNING／REVIEW：請確認佇列",
+                     "detail":  "pmTick 應已自動認領可開工 READY；執行完成→REVIEW＋evidence；獨立 Review 通過→DONE",
+                     "tickets":  "",
+                     "created":  "2026-11-20T13:31:51.227Z"
+                 }
              ],
     "note":  "OPEN 以 live open_actions／Web App 為準；本檔為後備快照。"
 }
