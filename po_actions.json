@@ -1,0 +1,38 @@
+{
+  "updated_at": "2026-11-20T10:20:00+08:00",
+  "source": "repo-snapshot（Sheet Web App 未通前之後備）",
+  "progress_pct": 10.6,
+  "formula": "DONE/(total-封存-CANCELLED) ≈ 5/47",
+  "open": [
+    {
+      "action_id": "POA-LOCAL-0002",
+      "source_role": "SM",
+      "type": "IDLE_CHECK",
+      "priority": "P2",
+      "title": "請確認執行端持續收票",
+      "detail": "TK-0002 已 DONE（admin_portal 可開）。焦點改 TK-0003 差異表；完成後解鎖 TK-0004。",
+      "related_tickets": "TK-0003,TK-0004",
+      "status": "OPEN"
+    },
+    {
+      "action_id": "POA-LOCAL-0003",
+      "source_role": "PM",
+      "type": "HANDLE",
+      "priority": "P2",
+      "title": "Google Sheet／Apps Script 尚未授權部署（可延後）",
+      "detail": "異常頁已用 po_actions.json 後備可刷新。你方便時再依 google-sheet-channel 部署 Web App 並回填 URL。",
+      "related_tickets": "",
+      "status": "OPEN"
+    },
+    {
+      "action_id": "POA-LOCAL-0004",
+      "source_role": "PM",
+      "type": "DECISION",
+      "priority": "P1",
+      "title": "A1 缺口：beta 無表單爬蟲（僅 Excel／JSON ingest）",
+      "detail": "flows 要求 06/12/18/24 爬表單；beta 產媽池是檔案匯入。EP-01 需新建爬蟲或改 flows／定案例外。請你之後裁定：新建 A1 vs 本期改用 ingest 佔位。",
+      "related_tickets": "TK-0101,TK-0003",
+      "status": "OPEN"
+    }
+  ]
+}

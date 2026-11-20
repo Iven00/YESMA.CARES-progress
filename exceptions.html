@@ -3,58 +3,102 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CG01 異常頁入口</title>
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <title>CG01 異常／需你處理</title>
   <style>
+    :root {
+      --bg: #0f1419; --panel: #1a222c; --text: #e7ecf1; --muted: #8b9aab;
+      --ready: #4a8fd4; --line: #2a3542; --p0: #c45c5c; --p1: #c9a227;
+    }
+    * { box-sizing: border-box; }
     body {
-      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-      background: #0f1419;
-      color: #e7ecf1;
-      max-width: 40rem;
-      margin: 0 auto;
-      padding: 2rem 1.25rem;
-      line-height: 1.5;
+      margin: 0; font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.45;
+      padding: 1.5rem; max-width: 52rem;
     }
-    a { color: #4a8fd4; }
-    .box {
-      background: #1a222c;
-      border: 1px solid #2a3542;
-      border-radius: 8px;
-      padding: 1rem 1.15rem;
-      margin: 1rem 0;
+    h1 { font-size: 1.3rem; margin: 0 0 0.25rem; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    button, .btn {
+      display: inline-block; margin: 0 0.5rem 0.75rem 0;
+      padding: 0.4rem 0.75rem; border-radius: 6px;
+      border: 1px solid var(--line); background: var(--panel);
+      color: var(--ready); cursor: pointer; font: inherit; text-decoration: none;
     }
-    code { font-size: 0.85em; }
-    .muted { color: #8b9aab; font-size: 0.9rem; }
+    .meta {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1rem;
+      color: var(--muted); font-size: 0.9rem;
+    }
+    table {
+      width: 100%; border-collapse: collapse; background: var(--panel);
+      border-radius: 8px; overflow: hidden; font-size: 0.9rem;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line); padding: 0.55rem 0.7rem;
+      text-align: left; vertical-align: top;
+    }
+    th { color: var(--muted); }
+    .d { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+    .err { color: var(--p0); }
+    .tag-p0 { color: var(--p0); font-weight: 700; }
+    .tag-p1 { color: var(--p1); font-weight: 700; }
   </style>
 </head>
 <body>
-  <h1>異常／需你處理</h1>
-  <p class="muted">
-    權威資料在 Google Sheet 工作表 <code>PO_Actions</code>（OPEN）。
-    由程式 <strong>PM</strong>／<strong>SM</strong> 排程寫入；你處理後把該列改 DONE。
+  <h1>CG01 異常／需你處理</h1>
+  <p class="sub">讀取同站 <code>po_actions.json</code>（Sheet Web App 未通前之後備）。手動重新整理即可。</p>
+  <p>
+    <button type="button" onclick="loadActions()">重新整理</button>
+    <a class="btn" href="./index.html">進度板</a>
   </p>
-
-  <div class="box">
-    <strong>正式異常頁（Apps Script Web App）</strong>
-    <p class="muted">打通 Sheet 並部署 Web App 後，把 URL 填進下方（或改本檔連結）。</p>
-    <p>
-      <!-- 部署後改成真實 URL -->
-      <a id="webapp" href="#">尚未設定 webapp_url — 見試算表 Meta 或通道說明</a>
-    </p>
-    <p><button type="button" onclick="location.reload()">重新整理本入口</button></p>
-  </div>
-
-  <div class="box">
-    <strong>你怎麼用</strong>
-    <ol>
-      <li>排程每小時（或選單「立即排程一輪」）掃描票 → 寫入 <code>PO_Actions</code></li>
-      <li>開 Web App 異常頁，手動刷新</li>
-      <li>在 Sheet 填 <code>po_resolution</code>，<code>status=DONE</code></li>
-    </ol>
-  </div>
-
-  <p class="muted">
-    進度總覽：<a href="./index.html">progress/</a> ·
-    角色說明在 repo：<code>tickets/google-sheet-channel/PM_SM_角色與排程.md</code>
-  </p>
+  <div class="meta" id="meta">載入中…</div>
+  <table>
+    <thead>
+      <tr><th>優先</th><th>類型</th><th>來源</th><th>內容</th><th>相關票</th></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <script>
+    async function loadActions() {
+      var meta = document.getElementById('meta');
+      var tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
+      try {
+        var res = await fetch('./po_actions.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        var data = await res.json();
+        meta.textContent = '更新：' + (data.updated_at || '—') +
+          ' · 進度約 ' + (data.progress_pct != null ? data.progress_pct + '%' : '—') +
+          ' · 來源：' + (data.source || '—');
+        var rows = (data.open || []).filter(function (x) { return x.status === 'OPEN'; });
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="5">目前沒有 OPEN 異常。</td></tr>';
+          return;
+        }
+        rows.sort(function (a, b) {
+          var o = { P0: 0, P1: 1, P2: 2 };
+          return (o[a.priority] || 9) - (o[b.priority] || 9);
+        });
+        tbody.innerHTML = rows.map(function (x) {
+          var pc = x.priority === 'P0' ? 'tag-p0' : (x.priority === 'P1' ? 'tag-p1' : '');
+          return '<tr>' +
+            '<td class="' + pc + '">' + esc(x.priority) + '</td>' +
+            '<td>' + esc(x.type) + '</td>' +
+            '<td>' + esc(x.source_role) + '</td>' +
+            '<td><strong>' + esc(x.title) + '</strong><div class="d">' + esc(x.detail) + '</div></td>' +
+            '<td>' + esc(x.related_tickets || '—') + '</td>' +
+            '</tr>';
+        }).join('');
+      } catch (e) {
+        meta.innerHTML = '<span class="err">載入失敗：' + esc(String(e.message || e)) + '</span>';
+      }
+    }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    loadActions();
+  </script>
 </body>
 </html>
