@@ -4,101 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="refresh" content="0;url=https://script.google.com/macros/s/AKfycbyb4h42WE9L87pBUAP4u4vzMPExJJMJsidVP3FC_nF_rqfSbYtcTT1NHopU8khTaQknrA/exec" />
   <title>CG01 異常／需你處理</title>
   <style>
     :root {
       --bg: #0f1419; --panel: #1a222c; --text: #e7ecf1; --muted: #8b9aab;
-      --ready: #4a8fd4; --line: #2a3542; --p0: #c45c5c; --p1: #c9a227;
+      --ready: #4a8fd4; --line: #2a3542;
     }
-    * { box-sizing: border-box; }
     body {
       margin: 0; font-family: "Segoe UI", "Noto Sans TC", sans-serif;
       background: var(--bg); color: var(--text); line-height: 1.45;
-      padding: 1.5rem; max-width: 52rem;
+      padding: 1.5rem; max-width: 40rem;
     }
-    h1 { font-size: 1.3rem; margin: 0 0 0.25rem; }
-    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
-    button, .btn {
-      display: inline-block; margin: 0 0.5rem 0.75rem 0;
-      padding: 0.4rem 0.75rem; border-radius: 6px;
-      border: 1px solid var(--line); background: var(--panel);
-      color: var(--ready); cursor: pointer; font: inherit; text-decoration: none;
-    }
-    .meta {
+    a { color: var(--ready); }
+    .sub { color: var(--muted); font-size: 0.9rem; }
+    .box {
       background: var(--panel); border: 1px solid var(--line);
-      border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1rem;
-      color: var(--muted); font-size: 0.9rem;
+      border-radius: 8px; padding: 0.85rem 1rem; margin-top: 1rem;
     }
-    table {
-      width: 100%; border-collapse: collapse; background: var(--panel);
-      border-radius: 8px; overflow: hidden; font-size: 0.9rem;
-    }
-    th, td {
-      border-bottom: 1px solid var(--line); padding: 0.55rem 0.7rem;
-      text-align: left; vertical-align: top;
-    }
-    th { color: var(--muted); }
-    .d { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
-    .err { color: var(--p0); }
-    .tag-p0 { color: var(--p0); font-weight: 700; }
-    .tag-p1 { color: var(--p1); font-weight: 700; }
   </style>
+  <script>
+    (function () {
+      var LIVE = 'https://script.google.com/macros/s/AKfycbyb4h42WE9L87pBUAP4u4vzMPExJJMJsidVP3FC_nF_rqfSbYtcTT1NHopU8khTaQknrA/exec';
+      location.replace(LIVE);
+    })();
+  </script>
 </head>
 <body>
-  <h1>CG01 異常／需你處理</h1>
-  <p class="sub">讀取同站 <code>po_actions.json</code>（Sheet Web App 未通前之後備）。手動重新整理即可。</p>
-  <p>
-    <button type="button" onclick="loadActions()">重新整理</button>
-    <a class="btn" href="./index.html">進度板</a>
-  </p>
-  <div class="meta" id="meta">載入中…</div>
-  <table>
-    <thead>
-      <tr><th>優先</th><th>類型</th><th>來源</th><th>內容</th><th>相關票</th></tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <script>
-    async function loadActions() {
-      var meta = document.getElementById('meta');
-      var tbody = document.getElementById('tbody');
-      tbody.innerHTML = '';
-      try {
-        var res = await fetch('./po_actions.json?t=' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        var data = await res.json();
-        meta.textContent = '更新：' + (data.updated_at || '—') +
-          ' · 進度約 ' + (data.progress_pct != null ? data.progress_pct + '%' : '—') +
-          ' · 來源：' + (data.source || '—');
-        var rows = (data.open || []).filter(function (x) { return x.status === 'OPEN'; });
-        if (!rows.length) {
-          tbody.innerHTML = '<tr><td colspan="5">目前沒有 OPEN 異常。</td></tr>';
-          return;
-        }
-        rows.sort(function (a, b) {
-          var o = { P0: 0, P1: 1, P2: 2 };
-          return (o[a.priority] || 9) - (o[b.priority] || 9);
-        });
-        tbody.innerHTML = rows.map(function (x) {
-          var pc = x.priority === 'P0' ? 'tag-p0' : (x.priority === 'P1' ? 'tag-p1' : '');
-          return '<tr>' +
-            '<td class="' + pc + '">' + esc(x.priority) + '</td>' +
-            '<td>' + esc(x.type) + '</td>' +
-            '<td>' + esc(x.source_role) + '</td>' +
-            '<td><strong>' + esc(x.title) + '</strong><div class="d">' + esc(x.detail) + '</div></td>' +
-            '<td>' + esc(x.related_tickets || '—') + '</td>' +
-            '</tr>';
-        }).join('');
-      } catch (e) {
-        meta.innerHTML = '<span class="err">載入失敗：' + esc(String(e.message || e)) + '</span>';
-      }
-    }
-    function esc(s) {
-      return String(s == null ? '' : s)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-    loadActions();
-  </script>
+  <h1>轉往 live 異常頁</h1>
+  <p class="sub">權威來源：Google Sheet <code>PO_Actions</code>（Apps Script Web App）。</p>
+  <div class="box">
+    <p><a href="https://script.google.com/macros/s/AKfycbyb4h42WE9L87pBUAP4u4vzMPExJJMJsidVP3FC_nF_rqfSbYtcTT1NHopU8khTaQknrA/exec">開啟 live 異常頁</a></p>
+    <p class="sub">若未自動轉址，請點上方連結。靜態後備：<a href="./po_actions.json">po_actions.json</a> · <a href="./index.html">進度板</a></p>
+  </div>
 </body>
 </html>

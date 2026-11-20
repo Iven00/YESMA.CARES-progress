@@ -4,9 +4,10 @@
 |---|---|
 | 頁面 | [`index.html`](./index.html) 進度｜[`exceptions.html`](./exceptions.html) 異常入口 |
 | 線上 URL（已通） | **https://iven00.github.io/YESMA.CARES-progress/** |
-| 異常入口 | **https://iven00.github.io/YESMA.CARES-progress/exceptions.html** |
+| 異常入口（Pages） | **https://iven00.github.io/YESMA.CARES-progress/exceptions.html** → 轉址 live Web App |
+| 異常 live | **https://script.google.com/macros/s/AKfycbyb4h42WE9L87pBUAP4u4vzMPExJJMJsidVP3FC_nF_rqfSbYtcTT1NHopU8khTaQknrA/exec** |
 | 說明 | 主倉 `YESMA.CARES` 為 **private**，免費方案無法開 Pages；改用公開倉 `Iven00/YESMA.CARES-progress` 託管進度頁。更新：改本目錄 HTML → 同步推到該公開倉。 |
-| 異常權威 | Google Sheet `PO_Actions`＋Apps Script Web App（程式 PM／SM 寫入） |
+| 異常權威 | Google Sheet `PO_Actions`＋Apps Script Web App（程式 PM／SM 寫入）；Pages 入口僅轉址 |
 | 票據權威 | Sheet `Tickets`（打通後）；repo Markdown＝快照（**不整批 Issues**） |
 
 ## 啟用（一次）
