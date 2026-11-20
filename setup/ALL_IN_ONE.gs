@@ -69,7 +69,11 @@ function bootstrapSheet() {
 
   pingChannel();
   logEvent_('NOTE', '', 'bootstrapSheet 完成', '');
-  SpreadsheetApp.getUi().alert('bootstrapSheet 完成：Tickets／Events／Meta／PO_Actions／Schedule_Log');
+  try {
+    SpreadsheetApp.getUi().alert('bootstrapSheet 完成：Tickets／Events／Meta／PO_Actions／Schedule_Log');
+  } catch (e) {
+    Logger.log('bootstrapSheet 完成（無 UI 環境，略過 alert）');
+  }
 }
 
 /**
