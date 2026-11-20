@@ -781,4 +781,53 @@ function saveWebAppUrl() {
   }
 }
 
+/** 從公開 seed CSV 灌入 Tickets（覆蓋資料列，保留表頭） */
+function seedTicketsFromUrl() {
+  var url = 'https://cdn.jsdelivr.net/gh/Iven00/YESMA.CARES-progress@main/setup/seed_from_backlog.csv';
+  var text = UrlFetchApp.fetch(url, { muteHttpExceptions: true }).getContentText('UTF-8');
+  var lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
+  if (lines.length < 2) throw new Error('seed 空白');
+  function parseLine(l) {
+    var cols = [];
+    var cur = '';
+    var q = false;
+    for (var i = 0; i < l.length; i++) {
+      var c = l.charAt(i);
+      if (c === '"') { q = !q; continue; }
+      if (c === ',' && !q) { cols.push(cur); cur = ''; continue; }
+      cur += c;
+    }
+    cols.push(cur);
+    return cols;
+  }
+  var rows = [];
+  for (var r = 1; r < lines.length; r++) {
+    var cols = parseLine(lines[r]);
+    while (cols.length < HEADERS.length) cols.push('');
+    rows.push(cols.slice(0, HEADERS.length));
+  }
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_TICKETS) || ensureSheet_(ss, SHEET_TICKETS);
+  if (sh.getLastRow() < 1) {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sh.setFrozenRows(1);
+  } else {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+  if (sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow(), HEADERS.length).clearContent();
+  if (rows.length) sh.getRange(2, 1, 1 + rows.length, HEADERS.length).setValues(rows);
+  // TK-0002 已解阻：標記 DONE
+  var data = sh.getDataRange().getValues();
+  var idx = indexMap_(data[0]);
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][idx.ticket_id]) === 'TK-0002' && String(data[i][idx.status]) === 'BLOCKED') {
+      sh.getRange(i + 1, idx.status + 1).setValue('DONE');
+      sh.getRange(i + 1, idx.updated_at + 1).setValue(new Date().toISOString());
+    }
+  }
+  logEvent_('NOTE', '', 'seedTicketsFromUrl rows=' + rows.length, url);
+  Logger.log('seeded ' + rows.length);
+  return { rows: rows.length };
+}
+
 
