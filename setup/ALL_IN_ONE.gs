@@ -144,6 +144,7 @@ function onOpen() {
     .addItem('5. 儲存異常頁 Web App URL', 'saveWebAppUrl')
     .addSeparator()
     .addItem('6. 單票制重整 applySequentialQueueFix', 'applySequentialQueueFix')
+    .addItem('7. 票狀態重灌 resetTicketQueueFromSeed', 'resetTicketQueueFromSeed')
     .addToUi();
 }
 
@@ -351,6 +352,41 @@ function applySequentialQueueFix() {
   try {
     SpreadsheetApp.getUi().alert(
       '單票制重整完成\n轉狀態 ' + converted + ' 列\n關閉洗版異常 ' + closed +
+      '\n焦點：' + (summary.focus || []).join(',')
+    );
+  } catch (e) {}
+  Logger.log(JSON.stringify(summary));
+  return summary;
+}
+
+/**
+ * 票狀態恢復重來：重灌 seed → 關閉全部 OPEN PO_Actions → pmTick（單票焦點）
+ */
+function resetTicketQueueFromSeed() {
+  var seeded = seedTicketsFromUrl();
+  ensurePoSheet_();
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var po = ss.getSheetByName('PO_Actions');
+  var closed = 0;
+  if (po && po.getLastRow() >= 2) {
+    var pdata = po.getDataRange().getValues();
+    var pmap = {};
+    pdata[0].forEach(function (n, i) { pmap[String(n)] = i; });
+    for (var p = 1; p < pdata.length; p++) {
+      if (String(pdata[p][pmap.status]) !== 'OPEN') continue;
+      po.getRange(p + 1, pmap.status + 1).setValue('DONE');
+      po.getRange(p + 1, pmap.po_resolution + 1).setValue('票狀態重灌 resetTicketQueueFromSeed');
+      po.getRange(p + 1, pmap.resolved_at + 1).setValue(new Date().toISOString());
+      closed++;
+    }
+  }
+  var summary = pmTick();
+  summary.seeded = seeded;
+  summary.closed_all_open_po = closed;
+  try {
+    SpreadsheetApp.getUi().alert(
+      '票狀態已重灌\nseed：' + JSON.stringify(seeded) +
+      '\n關閉 OPEN 異常：' + closed +
       '\n焦點：' + (summary.focus || []).join(',')
     );
   } catch (e) {}
@@ -877,8 +913,10 @@ function saveWebAppUrl() {
 
 /** 從公開 seed CSV 灌入 Tickets（覆蓋資料列，保留表頭） */
 function seedTicketsFromUrl() {
-  var url = 'https://cdn.jsdelivr.net/gh/Iven00/YESMA.CARES-progress@main/setup/seed_from_backlog.csv';
-  var text = UrlFetchApp.fetch(url, { muteHttpExceptions: true }).getContentText('UTF-8');
+  var url = 'https://raw.githubusercontent.com/Iven00/YESMA.CARES-progress/main/setup/seed_from_backlog.csv';
+  var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+  if (resp.getResponseCode() >= 400) throw new Error('seed fetch HTTP ' + resp.getResponseCode());
+  var text = resp.getContentText('UTF-8');
   var lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
   if (lines.length < 2) throw new Error('seed 空白');
   function parseLine(l) {
