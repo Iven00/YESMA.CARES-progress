@@ -814,8 +814,11 @@ function seedTicketsFromUrl() {
   } else {
     sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
-  if (sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow(), HEADERS.length).clearContent();
-  if (rows.length) sh.getRange(2, 1, 1 + rows.length, HEADERS.length).setValues(rows);
+  if (sh.getLastRow() > 1) {
+    // 4 參數版為 (row, column, numRows, numColumns)
+    sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS.length).clearContent();
+  }
+  if (rows.length) sh.getRange(2, 1, rows.length, HEADERS.length).setValues(rows);
   // TK-0002 已解阻：標記 DONE
   var data = sh.getDataRange().getValues();
   var idx = indexMap_(data[0]);
