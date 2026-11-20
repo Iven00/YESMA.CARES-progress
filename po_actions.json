@@ -1,32 +1,20 @@
-{
-  "updated_at": "2026-11-20T10:30:00+08:00",
-  "source": "repo-snapshot（Sheet Web App 未通前之後備）",
-  "progress_pct": 10.6,
-  "formula": "DONE/(total-封存-CANCELLED) ≈ 5/47",
-  "open": [
-    {
-      "action_id": "POA-LOCAL-0003",
-      "source_role": "PM",
-      "type": "HANDLE",
-      "priority": "P2",
-      "title": "Google Sheet／Apps Script 授權部署（與 PO 一起操作）",
-      "detail": "A1 複製與 IDLE 已處理。下一步：你登入 Google → 建試算表 → 貼 google-sheet-channel 腳本 → pingChannel／bootstrap → 部署 Web App。執行端會陪你逐步操作。",
-      "related_tickets": "",
-      "status": "OPEN"
-    }
-  ],
-  "closed_recent": [
-    {
-      "action_id": "POA-LOCAL-0004",
-      "status": "DONE",
-      "po_resolution": "A1 用複製專案 YESMA.CARES_A1_ERPFormsLoad；不改 CARES_ERPFormsLoad 原倉",
-      "evidence": "C:\\CODEs\\YESMA.CARES_A1_ERPFormsLoad；verification/EP-00/POA_A1_裁決_ERPFormsLoad.md"
-    },
-    {
-      "action_id": "POA-LOCAL-0002",
-      "status": "DONE",
-      "po_resolution": "IDLE_CHECK 是執行端／SM 催票用，不是要你動手。已恢復開工（TK-0002 DONE、A1 複製中），本項關閉。",
-      "evidence": "見下方說明"
-    }
-  ]
+﻿{
+    "updated_at":  "2026-11-20T19:26:36+08:00",
+    "source":  "repo-snapshot（後備）；異常權威＝Sheet Web App PO_Actions",
+    "progress_pct":  76.6,
+    "formula":  "DONE/total = 36/47",
+    "pm_focus":  "TK-0503",
+    "pm_phase":  "execute",
+    "open":  [
+
+             ],
+    "note":  "OPEN 清單以 live Web App 為準；本檔僅標記快照時間。舊部署／授權 POA 已關閉。",
+    "closed_recent":  [
+                          {
+                              "action_id":  "POA-LOCAL-0003",
+                              "status":  "DONE",
+                              "po_resolution":  "Sheet／Web App／channel_token 已通；票務閉環運轉中",
+                              "evidence":  "Meta.webapp_url；通道驗收清單"
+                          }
+                      ]
 }

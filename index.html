@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
@@ -38,6 +38,7 @@
     .run .n { color: var(--run); }
     .block .n { color: var(--block); }
     .ready .n { color: var(--ready); }
+    .review .n { color: #9b7edc; }
     table {
       width: 100%; border-collapse: collapse; background: var(--panel);
       border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; font-size: 0.9rem;
@@ -60,7 +61,7 @@
 </head>
 <body>
   <h1>NS-CARES-CG01 進度板</h1>
-  <p class="sub">快照更新：2026-11-20 10:20 · 票據權威：repo Markdown（Sheet 打通前）</p>
+  <p class="sub">快照更新：2026-11-20 19:26 · 票據權威：Google Sheet（本頁為觀察快照；焦點 `TK-0503`／`execute`）</p>
   <div class="actions">
     <button type="button" onclick="location.reload()">重新整理本頁</button>
     <a href="https://github.com/Iven00/YESMA.CARES/blob/main/2工作分解過程文件/tickets/Ticket_Backlog.md">Ticket_Backlog</a>
@@ -69,26 +70,26 @@
 
   <div class="grid">
     <div class="card"><div class="l">總票數</div><div class="n">47</div></div>
-    <div class="card done"><div class="l">DONE</div><div class="n">5</div></div>
-    <div class="card run"><div class="l">RUNNING</div><div class="n">1</div></div>
-    <div class="card block"><div class="l">BLOCKED（顯性）</div><div class="n">1+</div></div>
-    <div class="card ready"><div class="l">進度%</div><div class="n">10.6</div></div>
+    <div class="card done"><div class="l">DONE</div><div class="n">36</div></div>
+    <div class="card run"><div class="l">RUNNING</div><div class="n">0</div></div>
+    <div class="card review"><div class="l">REVIEW</div><div class="n">1</div></div>
+    <div class="card block"><div class="l">BLOCKED</div><div class="n">0</div></div>
+    <div class="card ready"><div class="l">進度%</div><div class="n">76.6</div></div>
   </div>
+  <p class="sub">READY 10 · 排程每 30 分 halfHourOrchestrate · observe refresh：Sync-ProgressBoard.ps1</p>
 
   <h2 style="font-size:1rem;margin:0 0 0.5rem;">依 Epic</h2>
   <table>
     <thead><tr><th>Epic</th><th>狀態</th><th>說明</th></tr></thead>
     <tbody>
-      <tr>
-        <td>EP-00 底座／beta</td>
-        <td><span class="tag t-run">進行中</span></td>
-        <td>DONE 5（含 TK-0002）；TK-0003 RUNNING；TK-0004 等差異表</td>
-      </tr>
-      <tr>
-        <td>EP-01～07</td>
-        <td><span class="tag t-gray">未解鎖</span></td>
-        <td>多依賴 EP-00；A1 表單爬蟲為已知大缺口</td>
-      </tr>
+      <tr><td>EP-00 底座／beta</td><td><span class="tag t-done">完成</span></td><td>DONE 7/7</td></tr>
+      <tr><td>EP-01 進單可見池</td><td><span class="tag t-done">完成</span></td><td>DONE 7/7</td></tr>
+      <tr><td>EP-02 登入大廳</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
+      <tr><td>EP-03 看價入會報名</td><td><span class="tag t-done">完成</span></td><td>DONE 12/12</td></tr>
+      <tr><td>EP-04 個人大廳</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
+      <tr><td>EP-05 業務邀約</td><td><span class="tag t-run">進行中</span></td><td>DONE 2/5；TK-0503 REVIEW；READY 2</td></tr>
+      <tr><td>EP-06 S3～S5／附屬</td><td><span class="tag t-gray">待開工</span></td><td>DONE 0/4；READY 4</td></tr>
+      <tr><td>EP-07 不做／NFR</td><td><span class="tag t-gray">待開工</span></td><td>DONE 0/4；READY 4</td></tr>
     </tbody>
   </table>
 
@@ -96,21 +97,7 @@
   <table>
     <thead><tr><th>#</th><th>Ticket</th><th>狀態</th><th>下一步</th></tr></thead>
     <tbody>
-      <tr>
-        <td>1</td><td>TK-0003</td>
-        <td><span class="tag t-run">RUNNING</span></td>
-        <td>續填差異表其餘泳道（A1 缺口已記）</td>
-      </tr>
-      <tr>
-        <td>2</td><td>TK-0004</td>
-        <td><span class="tag t-block">BLOCKED</span></td>
-        <td>等 TK-0003</td>
-      </tr>
-      <tr>
-        <td>3</td><td>TK-0002</td>
-        <td><span class="tag t-done">DONE</span></td>
-        <td>admin_portal :8765 已 200</td>
-      </tr>
+      <tr><td>1</td><td>TK-0503</td><td><span class="tag t-run">REVIEW</span></td><td>發邀／補邀對齊</td></tr>
     </tbody>
   </table>
 
@@ -118,7 +105,7 @@
     <strong>觀察方式</strong>
     <ul>
       <li>異常頁入口轉址到 Sheet Web App（live <code>PO_Actions</code>）；靜態 <code>po_actions.json</code> 僅後備</li>
-      <li>清單仍以 private repo <code>Ticket_Backlog.md</code> 為準</li>
+      <li>清單／狀態以 Sheet 為準；repo Markdown／本頁＝快照</li>
     </ul>
   </div>
 </body>
