@@ -61,52 +61,117 @@
 </head>
 <body>
   <h1>NS-CARES-CG01 進度板</h1>
-  <p class="sub">快照更新：2026-11-20 19:52 · 票據權威：Google Sheet（本頁為觀察快照；焦點 `TK-0601`／`execute`）</p>
+  <p class="sub" id="sub-head">快照更新：2026-11-20 21:37 · 票據權威：Google Sheet（焦點 `／`）</p>
   <div class="actions">
-    <button type="button" onclick="location.reload()">重新整理本頁</button>
-    <a href="https://github.com/Iven00/YESMA.CARES/blob/main/2工作分解過程文件/tickets/Ticket_Backlog.md">Ticket_Backlog</a>
+    <button type="button" id="btn-refresh">重新整理資料</button>
     <a href="./exceptions.html">異常頁（需你處理）</a>
+    <span class="sub" id="live-status"></span>
   </div>
 
   <div class="grid">
-    <div class="card"><div class="l">總票數</div><div class="n">47</div></div>
-    <div class="card done"><div class="l">DONE</div><div class="n">39</div></div>
-    <div class="card run"><div class="l">RUNNING</div><div class="n">1</div></div>
-    <div class="card review"><div class="l">REVIEW</div><div class="n">0</div></div>
-    <div class="card block"><div class="l">BLOCKED</div><div class="n">0</div></div>
-    <div class="card ready"><div class="l">進度%</div><div class="n">83</div></div>
+    <div class="card"><div class="l">總票數</div><div class="n" id="n-total">47</div></div>
+    <div class="card done"><div class="l">DONE</div><div class="n" id="n-done">47</div></div>
+    <div class="card run"><div class="l">RUNNING</div><div class="n" id="n-run">0</div></div>
+    <div class="card review"><div class="l">REVIEW</div><div class="n" id="n-review">0</div></div>
+    <div class="card block"><div class="l">BLOCKED</div><div class="n" id="n-block">0</div></div>
+    <div class="card ready"><div class="l">進度%</div><div class="n" id="n-pct">100</div></div>
   </div>
-  <p class="sub">READY 7 · 排程每 30 分 halfHourOrchestrate · observe refresh：Sync-ProgressBoard.ps1</p>
+  <p class="sub" id="sub-ready">READY 0 · 排程每 30 分 · observe：Sync-ProgressBoard.ps1（預設推觀察倉）</p>
 
   <h2 style="font-size:1rem;margin:0 0 0.5rem;">依 Epic</h2>
   <table>
     <thead><tr><th>Epic</th><th>狀態</th><th>說明</th></tr></thead>
-    <tbody>
+    <tbody id="epic-body">
       <tr><td>EP-00 底座／beta</td><td><span class="tag t-done">完成</span></td><td>DONE 7/7</td></tr>
       <tr><td>EP-01 進單可見池</td><td><span class="tag t-done">完成</span></td><td>DONE 7/7</td></tr>
       <tr><td>EP-02 登入大廳</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
       <tr><td>EP-03 看價入會報名</td><td><span class="tag t-done">完成</span></td><td>DONE 12/12</td></tr>
       <tr><td>EP-04 個人大廳</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
       <tr><td>EP-05 業務邀約</td><td><span class="tag t-done">完成</span></td><td>DONE 5/5</td></tr>
-      <tr><td>EP-06 S3～S5／附屬</td><td><span class="tag t-run">進行中</span></td><td>DONE 0/4；TK-0601 RUNNING；READY 3</td></tr>
-      <tr><td>EP-07 不做／NFR</td><td><span class="tag t-gray">待開工</span></td><td>DONE 0/4；READY 4</td></tr>
+      <tr><td>EP-06 S3～S5／附屬</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
+      <tr><td>EP-07 不做／NFR</td><td><span class="tag t-done">完成</span></td><td>DONE 4/4</td></tr>
     </tbody>
   </table>
 
   <h2 style="font-size:1rem;margin:0 0 0.5rem;">現在焦點</h2>
   <table>
     <thead><tr><th>#</th><th>Ticket</th><th>狀態</th><th>下一步</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>TK-0601</td><td><span class="tag t-run">RUNNING</span></td><td>S3～S5 差距閉環</td></tr>
+    <tbody id="focus-body">
+      <tr><td>1</td><td>—</td><td><span class="tag t-gray">idle</span></td><td>無焦點；等 pmTick</td></tr>
     </tbody>
   </table>
 
   <div class="card">
     <strong>觀察方式</strong>
     <ul>
-      <li>異常頁入口轉址到 Sheet Web App（live <code>PO_Actions</code>）；靜態 <code>po_actions.json</code> 僅後備</li>
-      <li>清單／狀態以 Sheet 為準；repo Markdown／本頁＝快照</li>
+      <li>本頁每分鐘／按「重新整理」讀 <code>board.json</code>（同域），並嘗試 live <code>action=board</code></li>
+      <li>異常頁轉址 Sheet Web App（live <code>PO_Actions</code>）</li>
+      <li>主倉產品碼另驗收；此觀察倉可每輪自動推送</li>
     </ul>
   </div>
+<script>
+(function () {
+  var WEBAPP = 'https://script.google.com/macros/s/AKfycbyb4h42WE9L87pBUAP4u4vzMPExJJMJsidVP3FC_nF_rqfSbYtcTT1NHopU8khTaQknrA/exec';
+  var statusEl = document.getElementById('live-status');
+  function tagClass(st) {
+    if (/DONE/.test(st)) return 't-done';
+    if (/RUNNING|REVIEW/.test(st)) return 't-run';
+    if (/BLOCKED/.test(st)) return 't-block';
+    return 't-gray';
+  }
+  function epicTagClass(tag) {
+    if (tag === '完成') return 't-done';
+    if (tag === '進行中') return 't-run';
+    return 't-gray';
+  }
+  function applyBoard(b, src) {
+    if (!b || !b.ok) return;
+    document.getElementById('n-total').textContent = b.total;
+    document.getElementById('n-done').textContent = b.done;
+    document.getElementById('n-run').textContent = b.running;
+    document.getElementById('n-review').textContent = b.review;
+    document.getElementById('n-block').textContent = b.blocked;
+    document.getElementById('n-pct').textContent = b.pct;
+    document.getElementById('sub-ready').textContent =
+      'READY ' + b.ready + ' · 來源 ' + src + ' · ' + (b.at || '');
+    document.getElementById('sub-head').textContent =
+      '即時／快照：' + (b.at || '') + ' · Sheet 權威 · 焦點 `' + (b.pm_focus || '—') + '`／`' + (b.pm_phase || '—') + '`';
+    if (b.epics && b.epics.length) {
+      var tb = document.getElementById('epic-body');
+      var labels = {
+        'EP-00': 'EP-00 底座／beta', 'EP-01': 'EP-01 進單可見池', 'EP-02': 'EP-02 登入大廳',
+        'EP-03': 'EP-03 看價入會報名', 'EP-04': 'EP-04 個人大廳', 'EP-05': 'EP-05 業務邀約',
+        'EP-06': 'EP-06 S3～S5／附屬', 'EP-07': 'EP-07 不做／NFR'
+      };
+      tb.innerHTML = b.epics.map(function (e) {
+        return '<tr><td>' + (labels[e.epic] || e.epic) + '</td><td><span class="tag ' +
+          epicTagClass(e.tag) + '">' + e.tag + '</span></td><td>' + e.text + '</td></tr>';
+      }).join('');
+    }
+    var ft = document.getElementById('focus-body');
+    var focusId = b.pm_focus || '—';
+    var focusSt = (b.ticket && b.ticket.status) || b.pm_phase || 'idle';
+    var focusNext = (b.ticket && b.ticket.objective) || (b.pm_phase ? ('phase=' + b.pm_phase) : '無焦點；等 pmTick');
+    ft.innerHTML = '<tr><td>1</td><td>' + focusId + '</td><td><span class="tag ' +
+      tagClass(focusSt) + '">' + focusSt + '</span></td><td>' + focusNext + '</td></tr>';
+    if (statusEl) statusEl.textContent = '已更新（' + src + '）';
+  }
+  function load() {
+    if (statusEl) statusEl.textContent = '更新中…';
+    fetch('./board.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (b) { applyBoard(b, 'board.json'); })
+      .catch(function () { if (statusEl) statusEl.textContent = 'board.json 讀取失敗（顯示內嵌快照）'; });
+    // 嘗試 live Web App（CORS 失敗則忽略；仍有同域 board.json）
+    fetch(WEBAPP + '?format=json&action=board', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (b) { if (b && b.ok) applyBoard(b, 'live sheet'); })
+      .catch(function () {});
+  }
+  document.getElementById('btn-refresh').addEventListener('click', function () { load(); });
+  load();
+  setInterval(load, 60000);
+})();
+</script>
 </body>
 </html>

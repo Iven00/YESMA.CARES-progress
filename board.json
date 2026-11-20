@@ -1,0 +1,65 @@
+﻿{
+    "ok":  true,
+    "source":  "backlog",
+    "total":  47,
+    "done":  47,
+    "running":  0,
+    "review":  0,
+    "blocked":  0,
+    "ready":  0,
+    "pct":  100,
+    "pm_focus":  "",
+    "pm_phase":  "",
+    "ticket":  null,
+    "epics":  [
+                  {
+                      "epic":  "EP-00",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 7/7"
+                  },
+                  {
+                      "epic":  "EP-01",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 7/7"
+                  },
+                  {
+                      "epic":  "EP-02",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 4/4"
+                  },
+                  {
+                      "epic":  "EP-03",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 12/12"
+                  },
+                  {
+                      "epic":  "EP-04",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 4/4"
+                  },
+                  {
+                      "epic":  "EP-05",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 5/5"
+                  },
+                  {
+                      "epic":  "EP-06",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 4/4"
+                  },
+                  {
+                      "epic":  "EP-07",
+                      "tag":  "完成",
+                      "health":  "綠",
+                      "text":  "DONE 4/4"
+                  }
+              ],
+    "at":  "2026-11-20T21:37:43+08:00"
+}
