@@ -1,0 +1,13 @@
+ticket_id,task_id,epic_id,story_id,objective,status,depends,split_from,owner,evidence_url,blocked_reason,updated_at,notes
+TK-0801,T-08-01a,EP-08,ST-08-01,UI設計 vs 現況差距盤點（首頁／案件大廳／個人大廳＋檔期）,READY,,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0802,T-08-01b,EP-08,ST-08-01,套用首頁（手機＋電腦）視覺／IA；主 CTA＝月嫂登入,READY,TK-0801,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0803,T-08-01c,EP-08,ST-08-01,套用案件大廳（手機＋電腦）視覺／IA；僅可派案語意,READY,"TK-0801,TK-0802",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0804,T-08-01d,EP-08,ST-08-01,套用個人大廳＋檔期編輯（UI月嫂大廳＝個人大廳）,READY,"TK-0801,TK-0803",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0805,T-08-02a,EP-08,ST-08-02,示意非 IN：履約／定金／線上合約／產媽自助 mock 不得當本期交付,READY,TK-0801,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0806,T-08-02b,EP-08,ST-08-02,負向驗收：網站地圖願景＋flows 覆寫勿誤驗,READY,TK-0805,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0901,T-09-01a,EP-09,ST-09-01,S1 節點表定稿＋EP-09 目錄／交叉引用就緒,READY,,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0902,T-09-01b,EP-09,ST-09-01,S1 AC／方法矩陣定稿；缺口只補 SRS 補充,READY,TK-0901,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0903,T-09-01c,EP-09,ST-09-01,S1 STAFF／負向／大廳 Web 劇本 L1 可勾,READY,TK-0902,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0904,T-09-02a,EP-09,ST-09-02,S2 節點表＋方法矩陣定稿,READY,TK-0901,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0905,T-09-02b,EP-09,ST-09-02,S2 月嫂 Web 劇本 L1～L2（:8787）可勾,READY,TK-0904,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0906,T-09-02c,EP-09,ST-09-02,種子／mock 說明＋可選 L4 驗收台；OUT 總負向,READY,"TK-0903,TK-0905",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
