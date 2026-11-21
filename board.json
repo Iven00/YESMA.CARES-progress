@@ -3,22 +3,22 @@
     "source":  "sheet",
     "total":  59,
     "done":  47,
-    "running":  1,
-    "review":  0,
+    "running":  0,
+    "review":  1,
     "blocked":  0,
     "ready":  11,
     "pct":  79.7,
     "pm_focus":  "TK-0801",
-    "pm_phase":  "execute",
+    "pm_phase":  "review",
     "ticket":  {
                    "ticket_id":  "TK-0801",
                    "objective":  "UI設計 vs 現況差距盤點（首頁／案件大廳／個人大廳＋檔期）",
-                   "status":  "RUNNING",
+                   "status":  "REVIEW",
                    "depends":  "",
                    "blocked_reason":  "",
-                   "evidence_url":  "",
-                   "notes":  "from Ticket_Backlog_補充",
-                   "updated_at":  "2026-11-21T05:20:41.366Z"
+                   "evidence_url":  "2工作分解過程文件/verification/EP-08/TK-0801_UI差距盤點_交付報告.md",
+                   "notes":  "from Ticket_Backlog_補充 | 自驗完成＋交付報告；對照表 TK-0801_UI差距盤點.md",
+                   "updated_at":  "2026-11-21T05:24:23.961Z"
                },
     "epics":  [
                   {
@@ -89,7 +89,7 @@
                       "epic":  "EP-08",
                       "tag":  "進行中",
                       "health":  "黃",
-                      "text":  "DONE 0/6；TK-0801 RUNNING；READY 5",
+                      "text":  "DONE 0/6；TK-0801 REVIEW；READY 5",
                       "done":  0,
                       "total":  6
                   },
@@ -102,5 +102,5 @@
                       "total":  6
                   }
               ],
-    "at":  "2026-11-21T05:20:59.753Z"
+    "at":  "2026-11-21T05:24:56.118Z"
 }
