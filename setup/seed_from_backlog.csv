@@ -1,48 +1,60 @@
 ﻿ticket_id,task_id,epic_id,story_id,objective,status,depends,split_from,owner,evidence_url,blocked_reason,updated_at,notes
-TK-0001,T-00-01a,EP-00,ST-00-01,針定 beta 路徑／SHA；啟動可重現,DONE,,,"Cursor Executor",2工作分解過程文件/verification/EP-00/TK-0001_beta針定與啟動.md,,2026-11-20,
-TK-0002,T-00-01b,EP-00,ST-00-01,業務／管理登入通路可用,DONE,TK-0001,,"Cursor Executor",2工作分解過程文件/verification/EP-00/TK-0002_登入通路.md,,2026-11-20,
-TK-0003,T-00-02a,EP-00,ST-00-02,beta↔flows 差異表,RUNNING,TK-0001,,"Cursor Executor",2工作分解過程文件/verification/EP-00/beta_vs_flows_差異表.md,,2026-11-20,
-TK-0004,T-00-02b,EP-00,ST-00-02,狀態／資料對照說明,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0005,T-00-02c,EP-00,ST-00-02,產媽池≠產媽 Web 口徑,DONE,TK-0001,,"Cursor Executor",2工作分解過程文件/verification/EP-00/TK-0005_產媽池非產媽Web口徑.md,,2026-11-20,
-TK-0006,T-00-03a,EP-00,ST-00-03,最小實體欄位清單,DONE,,,"Cursor Executor",2工作分解過程文件/verification/EP-00/TK-0006_最小資料實體.md,,2026-11-20,
-TK-0007,T-00-03b,EP-00,ST-00-03,資料模型設計說明,DONE,TK-0006,,"Cursor Executor",2工作分解過程文件/verification/EP-00/TK-0007_資料模型設計說明.md,,2026-11-20,
-TK-0101,T-01-01a,EP-01,ST-01-01,A1 排程＋手動觸發,READY,EP-00,,"Cursor Executor",,,2026-11-20,
-TK-0102,T-01-01b,EP-01,ST-01-01,匯入建草稿,READY,TK-0101,,"Cursor Executor",,,2026-11-20,
-TK-0103,T-01-01c,EP-01,ST-01-01,去重／失敗／報告,READY,TK-0102,,"Cursor Executor",,,2026-11-20,
-TK-0104,T-01-02a,EP-01,ST-01-02,待補件／可派案狀態機,READY,TK-0102,,"Cursor Executor",,,2026-11-20,
-TK-0105,T-01-02b,EP-01,ST-01-02,自動派負責人,READY,TK-0104,,"Cursor Executor",,,2026-11-20,
-TK-0106,T-01-02c,EP-01,ST-01-02,月嫂 DTO 去識別,READY,TK-0104,,"Cursor Executor",,,2026-11-20,
-TK-0107,T-01-03a,EP-01,ST-01-03,大廳僅可派案查詢,READY,TK-0104,,"Cursor Executor",,,2026-11-20,
-TK-0201,T-02-01a,EP-02,ST-02-01,LINE Login＋Callback,READY,EP-00,,"Cursor Executor",,,2026-11-20,
-TK-0202,T-02-01b,EP-02,ST-02-01,caregiver↔line_user_id,READY,TK-0201,,"Cursor Executor",,,2026-11-20,
-TK-0203,T-02-02a,EP-02,ST-02-02,預設落地案件大廳 UI,READY,TK-0202,,"Cursor Executor",,,2026-11-20,
-TK-0204,T-02-02b,EP-02,ST-02-02,大廳串可派案 API,READY,"TK-0107,TK-0203",,"Cursor Executor",,,2026-11-20,
-TK-0301,T-03-01a,EP-03,ST-03-01,看價頁不直接寫報名,READY,TK-0204,,"Cursor Executor",,,2026-11-20,
-TK-0302,T-03-01b,EP-03,ST-03-01,後備行情佔 A3,READY,TK-0006,,"Cursor Executor",,,2026-11-20,
-TK-0303,T-03-01c,EP-03,ST-03-01,A4 計價規則,READY,TK-0302,,"Cursor Executor",,,2026-11-20,
-TK-0304,T-03-01d,EP-03,ST-03-01,付2 鎖定文案,READY,TK-0301,,"Cursor Executor",,,2026-11-20,
-TK-0305,T-03-01e,EP-03,ST-03-01,未綁定導登入,READY,TK-0301,,"Cursor Executor",,,2026-11-20,
-TK-0306,T-03-02a,EP-03,ST-03-02,轉帳入會頁,READY,TK-0301,,"Cursor Executor",,,2026-11-20,
-TK-0307,T-03-02b,EP-03,ST-03-02,人工確認會籍,READY,TK-0306,,"Cursor Executor",,,2026-11-20,
-TK-0308,T-03-02c,EP-03,ST-03-02,過期擋／未入會可看拒,READY,TK-0307,,"Cursor Executor",,,2026-11-20,
-TK-0309,T-03-03a,EP-03,ST-03-03,報名事務＋feedback,READY,"TK-0303,TK-0307",,"Cursor Executor",,,2026-11-20,
-TK-0310,T-03-03b,EP-03,ST-03-03,拒絕回寫,READY,TK-0309,,"Cursor Executor",,,2026-11-20,
-TK-0311,T-03-03c,EP-03,ST-03-03,滿3／裸報負向,READY,TK-0309,,"Cursor Executor",,,2026-11-20,
-TK-0312,T-03-03d,EP-03,ST-03-03,檔期衝突硬擋,READY,TK-0309,,"Cursor Executor",,,2026-11-20,
-TK-0401,T-04-01a,EP-04,ST-04-01,個人大廳文案／導覽,READY,TK-0202,,"Cursor Executor",,,2026-11-20,
-TK-0402,T-04-01b,EP-04,ST-04-01,行情＋加值入口,READY,"TK-0401,TK-0302",,"Cursor Executor",,,2026-11-20,
-TK-0403,T-04-02a,EP-04,ST-04-02,基本檔三欄,READY,TK-0401,,"Cursor Executor",,,2026-11-20,
-TK-0404,T-04-02b,EP-04,ST-04-02,多段檔期,READY,TK-0401,,"Cursor Executor",,,2026-11-20,
-TK-0501,T-05-01a,EP-05,ST-05-01,S1 業務操作對齊,READY,"TK-0003,TK-0104",,"Cursor Executor",,,2026-11-20,
-TK-0502,T-05-01b,EP-05,ST-05-01,待補件／可派案通知,READY,TK-0501,,"Cursor Executor",,,2026-11-20,
-TK-0503,T-05-02a,EP-05,ST-05-02,發邀／補邀對齊,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0504,T-05-02b,EP-05,ST-05-02,無回應逾時入帳,READY,TK-0503,,"Cursor Executor",,,2026-11-20,
-TK-0505,T-05-03a,EP-05,ST-05-03,HCS／A5 語意對齊,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0601,T-06-01a,EP-06,ST-06-01,S3～S5 差距閉環,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0602,T-06-01b,EP-06,ST-06-01,產媽結果改非 Web 通路,READY,TK-0601,,"Cursor Executor",,,2026-11-20,
-TK-0603,T-06-02a,EP-06,ST-06-02,A2 LINE OA,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0604,T-06-02b,EP-06,ST-06-02,A6／A7 對齊或列例外,READY,TK-0003,,"Cursor Executor",,,2026-11-20,
-TK-0701,T-07-01a,EP-07,ST-07-01,三不做負向驗收,READY,,,"Cursor Executor",,,2026-11-20,
-TK-0702,T-07-01b,EP-07,ST-07-01,NFR-02／04 抽樣,READY,TK-0001,,"Cursor Executor",,,2026-11-20,
-TK-0703,T-07-02a,EP-07,ST-07-02,併發報名≤3 測試,READY,TK-0309,,"Cursor Executor",,,2026-11-20,
-TK-0704,T-07-02b,EP-07,ST-07-02,月嫂 API 個資掃描,READY,TK-0106,,"Cursor Executor",,,2026-11-20,
+TK-0001,T-00-01a,EP-00,ST-00-01,針定 beta 路徑／SHA；啟動可重現,DONE,,,Cursor Executor,2工作分解過程文件/verification/EP-00/TK-0001_beta針定與啟動.md,,2026-11-21,seed-preserve-DONE
+TK-0002,T-00-01b,EP-00,ST-00-01,業務／管理登入通路可用,DONE,TK-0001,,Cursor Executor,2工作分解過程文件/verification/EP-00/TK-0002_登入通路.md,,2026-11-21,seed-preserve-DONE
+TK-0003,T-00-02a,EP-00,ST-00-02,beta↔flows 差異表,DONE,TK-0001,,Cursor Executor,2工作分解過程文件/verification/EP-00/beta_vs_flows_差異表.md,,2026-11-21,seed-preserve-DONE
+TK-0004,T-00-02b,EP-00,ST-00-02,狀態／資料對照說明,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-00/狀態資料對照說明.md,,2026-11-21,seed-preserve-DONE
+TK-0005,T-00-02c,EP-00,ST-00-02,產媽池≠產媽 Web 口徑,DONE,TK-0001,,Cursor Executor,2工作分解過程文件/verification/EP-00/TK-0005_產媽池非產媽Web口徑.md,,2026-11-21,seed-preserve-DONE
+TK-0006,T-00-03a,EP-00,ST-00-03,最小實體欄位清單,DONE,,,Cursor Executor,2工作分解過程文件/verification/EP-00/TK-0006_最小資料實體.md,,2026-11-21,seed-preserve-DONE
+TK-0007,T-00-03b,EP-00,ST-00-03,資料模型設計說明,DONE,TK-0006,,Cursor Executor,2工作分解過程文件/verification/EP-00/TK-0007_資料模型設計說明.md,,2026-11-21,seed-preserve-DONE
+TK-0101,T-01-01a,EP-01,ST-01-01,A1 排程＋手動觸發,DONE,EP-00,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0102,T-01-01b,EP-01,ST-01-01,匯入建草稿,DONE,TK-0101,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0103,T-01-01c,EP-01,ST-01-01,去重／失敗／報告,DONE,TK-0102,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0104,T-01-02a,EP-01,ST-01-02,待補件／可派案狀態機,DONE,TK-0102,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0105,T-01-02b,EP-01,ST-01-02,自動派負責人,DONE,TK-0104,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0106,T-01-02c,EP-01,ST-01-02,月嫂 DTO 去識別,DONE,TK-0104,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0107,T-01-03a,EP-01,ST-01-03,大廳僅可派案查詢,DONE,TK-0104,,Cursor Executor,2工作分解過程文件/verification/EP-01/,,2026-11-21,seed-preserve-DONE
+TK-0201,T-02-01a,EP-02,ST-02-01,LINE Login＋Callback,DONE,EP-00,,Cursor Executor,2工作分解過程文件/verification/EP-02/,,2026-11-21,seed-preserve-DONE
+TK-0202,T-02-01b,EP-02,ST-02-01,caregiver↔line_user_id,DONE,TK-0201,,Cursor Executor,2工作分解過程文件/verification/EP-02/,,2026-11-21,seed-preserve-DONE
+TK-0203,T-02-02a,EP-02,ST-02-02,預設落地案件大廳 UI,DONE,TK-0202,,Cursor Executor,2工作分解過程文件/verification/EP-02/,,2026-11-21,seed-preserve-DONE
+TK-0204,T-02-02b,EP-02,ST-02-02,大廳串可派案 API,DONE,"TK-0107,TK-0203",,Cursor Executor,2工作分解過程文件/verification/EP-02/,,2026-11-21,seed-preserve-DONE
+TK-0301,T-03-01a,EP-03,ST-03-01,看價頁不直接寫報名,DONE,TK-0204,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0302,T-03-01b,EP-03,ST-03-01,後備行情佔 A3,DONE,TK-0006,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0303,T-03-01c,EP-03,ST-03-01,A4 計價規則,DONE,TK-0302,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0304,T-03-01d,EP-03,ST-03-01,付2 鎖定文案,DONE,TK-0301,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0305,T-03-01e,EP-03,ST-03-01,未綁定導登入,DONE,TK-0301,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0306,T-03-02a,EP-03,ST-03-02,轉帳入會頁,DONE,TK-0301,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0307,T-03-02b,EP-03,ST-03-02,人工確認會籍,DONE,TK-0306,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0308,T-03-02c,EP-03,ST-03-02,過期擋／未入會可看拒,DONE,TK-0307,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0309,T-03-03a,EP-03,ST-03-03,報名事務＋feedback,DONE,"TK-0303,TK-0307",,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0310,T-03-03b,EP-03,ST-03-03,拒絕回寫,DONE,TK-0309,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0311,T-03-03c,EP-03,ST-03-03,滿3／裸報負向,DONE,TK-0309,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0312,T-03-03d,EP-03,ST-03-03,檔期衝突硬擋,DONE,TK-0309,,Cursor Executor,2工作分解過程文件/verification/EP-03/,,2026-11-21,seed-preserve-DONE
+TK-0401,T-04-01a,EP-04,ST-04-01,個人大廳文案／導覽,DONE,TK-0202,,Cursor Executor,2工作分解過程文件/verification/EP-04/,,2026-11-21,seed-preserve-DONE
+TK-0402,T-04-01b,EP-04,ST-04-01,行情＋加值入口,DONE,"TK-0401,TK-0302",,Cursor Executor,2工作分解過程文件/verification/EP-04/,,2026-11-21,seed-preserve-DONE
+TK-0403,T-04-02a,EP-04,ST-04-02,基本檔三欄,DONE,TK-0401,,Cursor Executor,2工作分解過程文件/verification/EP-04/,,2026-11-21,seed-preserve-DONE
+TK-0404,T-04-02b,EP-04,ST-04-02,多段檔期,DONE,TK-0401,,Cursor Executor,2工作分解過程文件/verification/EP-04/,,2026-11-21,seed-preserve-DONE
+TK-0501,T-05-01a,EP-05,ST-05-01,S1 業務操作對齊,DONE,"TK-0003,TK-0104",,Cursor Executor,2工作分解過程文件/verification/EP-05/,,2026-11-21,seed-preserve-DONE
+TK-0502,T-05-01b,EP-05,ST-05-01,待補件／可派案通知,DONE,TK-0501,,Cursor Executor,2工作分解過程文件/verification/EP-05/,,2026-11-21,seed-preserve-DONE
+TK-0503,T-05-02a,EP-05,ST-05-02,發邀／補邀對齊,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-05/,,2026-11-21,seed-preserve-DONE
+TK-0504,T-05-02b,EP-05,ST-05-02,無回應逾時入帳,DONE,TK-0503,,Cursor Executor,2工作分解過程文件/verification/EP-05/,,2026-11-21,seed-preserve-DONE
+TK-0505,T-05-03a,EP-05,ST-05-03,HCS／A5 語意對齊,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-05/,,2026-11-21,seed-preserve-DONE
+TK-0601,T-06-01a,EP-06,ST-06-01,S3～S5 差距閉環,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-06/,,2026-11-21,seed-preserve-DONE
+TK-0602,T-06-01b,EP-06,ST-06-01,產媽結果改非 Web 通路,DONE,TK-0601,,Cursor Executor,2工作分解過程文件/verification/EP-06/,,2026-11-21,seed-preserve-DONE
+TK-0603,T-06-02a,EP-06,ST-06-02,A2 LINE OA,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-06/,,2026-11-21,seed-preserve-DONE
+TK-0604,T-06-02b,EP-06,ST-06-02,A6／A7 對齊或列例外,DONE,TK-0003,,Cursor Executor,2工作分解過程文件/verification/EP-06/,,2026-11-21,seed-preserve-DONE
+TK-0701,T-07-01a,EP-07,ST-07-01,三不做負向驗收,DONE,,,Cursor Executor,2工作分解過程文件/verification/EP-07/,,2026-11-21,seed-preserve-DONE
+TK-0702,T-07-01b,EP-07,ST-07-01,NFR-02／04 抽樣,DONE,TK-0001,,Cursor Executor,2工作分解過程文件/verification/EP-07/,,2026-11-21,seed-preserve-DONE
+TK-0703,T-07-02a,EP-07,ST-07-02,併發報名≤3 測試,DONE,TK-0309,,Cursor Executor,2工作分解過程文件/verification/EP-07/,,2026-11-21,seed-preserve-DONE
+TK-0704,T-07-02b,EP-07,ST-07-02,月嫂 API 個資掃描,DONE,TK-0106,,Cursor Executor,2工作分解過程文件/verification/EP-07/,,2026-11-21,seed-preserve-DONE
+TK-0801,T-08-01a,EP-08,ST-08-01,UI設計 vs 現況差距盤點（首頁／案件大廳／個人大廳＋檔期）,READY,,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0802,T-08-01b,EP-08,ST-08-01,套用首頁（手機＋電腦）視覺／IA；主 CTA＝月嫂登入,READY,TK-0801,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0803,T-08-01c,EP-08,ST-08-01,套用案件大廳（手機＋電腦）視覺／IA；僅可派案語意,READY,"TK-0801,TK-0802",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0804,T-08-01d,EP-08,ST-08-01,套用個人大廳＋檔期編輯（UI月嫂大廳＝個人大廳）,READY,"TK-0801,TK-0803",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0805,T-08-02a,EP-08,ST-08-02,示意非 IN：履約／定金／線上合約／產媽自助 mock 不得當本期交付,READY,TK-0801,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0806,T-08-02b,EP-08,ST-08-02,負向驗收：網站地圖願景＋flows 覆寫勿誤驗,READY,TK-0805,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0901,T-09-01a,EP-09,ST-09-01,S1 節點表定稿＋EP-09 目錄／交叉引用就緒,READY,,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0902,T-09-01b,EP-09,ST-09-01,S1 AC／方法矩陣定稿；缺口只補 SRS 補充,READY,TK-0901,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0903,T-09-01c,EP-09,ST-09-01,S1 STAFF／負向／大廳 Web 劇本 L1 可勾,READY,TK-0902,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0904,T-09-02a,EP-09,ST-09-02,S2 節點表＋方法矩陣定稿,READY,TK-0901,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0905,T-09-02b,EP-09,ST-09-02,S2 月嫂 Web 劇本 L1～L2（:8787）可勾,READY,TK-0904,,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
+TK-0906,T-09-02c,EP-09,ST-09-02,種子／mock 說明＋可選 L4 驗收台；OUT 總負向,READY,"TK-0903,TK-0905",,Cursor Executor,,,2026-11-21,from Ticket_Backlog_補充
