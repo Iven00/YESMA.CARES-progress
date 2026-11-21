@@ -11,6 +11,14 @@
 var SHEET_TICKETS = 'Tickets';
 var SHEET_EVENTS = 'Events';
 var SHEET_META = 'Meta';
+/** 容器試算表 ID（Execution API／無 UI 時 openById） */
+var SPREADSHEET_ID = '1DIZQzPdZiJAamXzUFOSntwumcyephK26EPNFhradG0E';
+
+function getSpreadsheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss) return ss;
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
 
 var HEADERS = [
   'ticket_id', 'task_id', 'epic_id', 'story_id', 'objective',
@@ -121,7 +129,8 @@ function splitTicket(originalId, newTickets) {
     ]);
   });
   if (rows.length) {
-    sheet.getRange(start, 1, start + rows.length - 1, HEADERS.length).setValues(rows);
+    // Sheet.getRange(row, column, numRows, numColumns)
+    sheet.getRange(start, 1, rows.length, HEADERS.length).setValues(rows);
   }
 
   logEvent_('SPLIT', originalId, '封存原票；新票 ' + rows.length + ' 筆', JSON.stringify(newTickets));
@@ -368,7 +377,7 @@ function seedTicketsFromUrl() {
   var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
   if (resp.getResponseCode() >= 400) throw new Error('seed fetch HTTP ' + resp.getResponseCode());
   var rows = parseSeedCsvText_(resp.getContentText('UTF-8'));
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet_();
   var sh = ss.getSheetByName(SHEET_TICKETS) || ensureSheet_(ss, SHEET_TICKETS);
   if (sh.getLastRow() < 1) {
     sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
@@ -454,8 +463,9 @@ function appendTicketRows_(rows, source) {
     existing[tid] = true;
   });
   if (toAdd.length) {
+    // Sheet.getRange(row, column, numRows, numColumns) — 第3／4參是「列數／欄數」
     var start = sh.getLastRow() + 1;
-    sh.getRange(start, 1, start + toAdd.length - 1, HEADERS.length).setValues(toAdd);
+    sh.getRange(start, 1, toAdd.length, HEADERS.length).setValues(toAdd);
   }
   try { applyTicketStatusValidation(); } catch (e2) {}
   var out = {
@@ -531,7 +541,7 @@ function pmTick() {
 }
 
 function pmTickBody_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet_();
   ensurePoSheet_();
   ensureScheduleLog_();
   var tickets = ss.getSheetByName(SHEET_TICKETS);
@@ -1260,6 +1270,14 @@ function handleApiGet_(p) {
   if (!auth.ok) return auth;
   if (action === 'focus') return apiFocus_();
   if (action === 'ping') return { ok: true, channel: 'SHEET-CARES-CG01-TICKETS', at: new Date().toISOString() };
+  if (action === 'seed_from_url') {
+    var seededGet = seedTicketsFromUrl();
+    var afterSeedGet = pmTick();
+    return { ok: true, seeded: seededGet, pm: afterSeedGet };
+  }
+  if (action === 'pm_tick') {
+    return { ok: true, pm: pmTick() };
+  }
   return { ok: false, error: 'unknown action: ' + action };
 }
 
