@@ -1,10 +1,10 @@
 ﻿{
-    "updated_at":  "2026-11-21T13:27:13+08:00",
+    "updated_at":  "2026-11-21T13:51:41+08:00",
     "source":  "observe refresh；異常權威＝Sheet Web App PO_Actions",
-    "progress_pct":  79.7,
-    "formula":  "DONE/total = 47/59",
-    "pm_focus":  "TK-0801",
-    "pm_phase":  "review",
+    "progress_pct":  81.4,
+    "formula":  "DONE/total = 48/59",
+    "pm_focus":  "TK-0802",
+    "pm_phase":  "execute",
     "open":  [
                  {
                      "id":  "POA-20261120-140144-91",
