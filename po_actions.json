@@ -1,5 +1,5 @@
 ﻿{
-    "updated_at":  "2026-11-21T14:26:42+08:00",
+    "updated_at":  "2026-11-21T14:56:41+08:00",
     "source":  "observe refresh；異常權威＝Sheet Web App PO_Actions",
     "progress_pct":  81.4,
     "formula":  "DONE/total = 48/59",
@@ -25,6 +25,16 @@
                      "detail":  "pmTick 應已自動認領可開工 READY；執行完成→REVIEW＋evidence；獨立 Review 通過→DONE",
                      "tickets":  "",
                      "created":  "2026-11-20T13:31:51.227Z"
+                 },
+                 {
+                     "id":  "POA-20261121-143149-55",
+                     "role":  "SM",
+                     "type":  "IDLE_CHECK",
+                     "priority":  "P1",
+                     "title":  "30分鐘 Review 未結：TK-0802",
+                     "detail":  "REVIEW 超過 30 分鐘無更新；請獨立 Reviewer 對照 AC／evidence 通過→DONE 或退回 RUNNING",
+                     "tickets":  "TK-0802",
+                     "created":  "2026-11-21T06:31:49.127Z"
                  }
              ],
     "note":  "OPEN 以 live open_actions／Web App 為準；本檔為後備快照。"
