@@ -1,5 +1,5 @@
 ﻿{
-    "updated_at":  "2026-11-22T13:56:54+08:00",
+    "updated_at":  "2026-11-22T14:26:56+08:00",
     "source":  "observe refresh；異常權威＝Sheet Web App PO_Actions",
     "progress_pct":  81.4,
     "formula":  "DONE/total = 48/59",
@@ -35,6 +35,16 @@
                      "detail":  "REVIEW 超過 30 分鐘無更新；請獨立 Reviewer 對照 AC／evidence 通過→DONE 或退回 RUNNING",
                      "tickets":  "TK-0802",
                      "created":  "2026-11-21T06:31:49.127Z"
+                 },
+                 {
+                     "id":  "POA-20261122-140147-18",
+                     "role":  "SM",
+                     "type":  "STALE",
+                     "priority":  "P1",
+                     "title":  "REVIEW 逾時未結：TK-0802",
+                     "detail":  "超過 24h 仍在 REVIEW；請獨立 Reviewer 通過→DONE 或退回 RUNNING｜套用首頁（手機＋電腦）視覺／IA；主 CTA＝月嫂登入",
+                     "tickets":  "TK-0802",
+                     "created":  "2026-11-22T06:01:47.119Z"
                  }
              ],
     "note":  "OPEN 以 live open_actions／Web App 為準；本檔為後備快照。"
